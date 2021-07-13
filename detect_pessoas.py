@@ -136,9 +136,11 @@ def run(weights='yolov5s.pt',  # model.pt path(s)
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
                     # Imprime o numero de pessoas detectadas.
                     if names[int(c)] == 'person':
+                        textsize = cv2.getTextSize('Pessoas detectadas: ', cv2.LINE_AA, 1, 2)[0]
+                        textX = (im0.shape[1] - textsize[0]) * 0.9
+                        textY = (im0.shape[0] + textsize[1]) * 0.1
                         pessoa = 'Pessoas detectadas: ' + str(n.item())
-                        a, b = 880, 50  # Posicao do texto (para video em 720p).
-                        cv2.putText(im0, pessoa, (a, b), 0, 1, color=colors(c, True), thickness=2, lineType=cv2.LINE_AA)
+                        cv2.putText(im0, pessoa, (int(textX), int(textY)), 0, 1, color=colors(c, True), thickness=2, lineType=cv2.LINE_AA)
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
